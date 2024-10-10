@@ -53,14 +53,14 @@ export const generateChart = async (fid: any) => { // async 추가
 
     //console.log("labels=" + JSON.stringify(labels));
     // sortedUserChartData와 labels를 매칭하여 available_claim_amount 값을 채움
-    const availableClaimAmounts = labels.map(label => {
+    const farRanks = labels.map(label => {
         const entry = sortedUserChartData.find(data => data.record_date_utc.startsWith(label));
-        return entry ? entry.available_claim_amount : 0; // 데이터가 없으면 0 반환
+        return entry ? entry.far_rank : 0; // 데이터가 없으면 0 반환
     });
 
-    console.log("availableClaimAmounts=" + JSON.stringify(availableClaimAmounts));
-    const minClaimAmount = Math.min(...availableClaimAmounts); // 최소값
-    const maxClaimAmount = Math.max(...availableClaimAmounts); // 최대값
+    console.log("farRanks=" + JSON.stringify(farRanks));
+    const minFarRank = Math.min(...farRanks); // 최소값
+    const maxFarRank = Math.max(...farRanks); // 최대값
 
     let labels14 = getLast14DaysLabels_MMDD(); //실제로 x축은 월일만 보여줌
 
@@ -70,15 +70,15 @@ export const generateChart = async (fid: any) => { // async 추가
     const ctx: any = canvas.getContext('2d');
 
     const chartConfig: any = {
-        type: 'line',
+        type: 'bar',
         data: {
             labels: labels14,
             datasets: [
                 {
                     //label: 'claim',
-                    data: availableClaimAmounts,
-                    borderColor: '#006400', // 선 색상
-                    backgroundColor: 'rgba(0, 0, 0, 0.1)', // 채워지는 영역 투명도
+                    data: farRanks,
+                    borderColor: '#8B4513', // 선 색상
+                    backgroundColor: 'rgba(139, 69, 19, 0.8)', // 채워지는 영역 투명도
                     fill: true, // 영역 차트로 만듬
                     pointBackgroundColor: 'red', // 데이터 포인트 색상
                     pointRadius: 2, // 데이터 포인트 크기
@@ -100,7 +100,7 @@ export const generateChart = async (fid: any) => { // async 추가
                     display: false, // 범례 표시를 비활성화
                     position: 'top',
                     labels: {
-                        color: '#006400', // 레전드 텍스트 색상
+                        color: '#8B4513', // 레전드 텍스트 색상
                         font: {
                             size: 12, // 레전드 텍스트 크기
                         }
@@ -112,7 +112,7 @@ export const generateChart = async (fid: any) => { // async 추가
                     title: {
                         display: true,
                         text: 'recent 14 days',
-                        color: '#006400',
+                        color: '#8B4513',
                         font: {
                             size: 14,
                             weight: 'bold',
@@ -125,22 +125,22 @@ export const generateChart = async (fid: any) => { // async 추가
                         borderDash: [5, 5], // 점선 스타일
                     },
                     ticks: {
-                        color: '#006400',
+                        color: '#8B4513',
                         font: {
                             size: 14,
                             weight: 'bold', // Y축 값들을 bold로 설정
                         }
                     },
                     border: {
-                        color: '#006400', // X축 검은색 선
+                        color: '#8B4513', // X축 검은색 선
                         width: 2, // X축 선 두께
                     }
                 },
                 y: {
                     title: {
                         display: true,
-                        text: 'Available Claim',
-                        color: '#006400',
+                        text: 'Far Rank',
+                        color: '#8B4513',
                         font: {
                             size: 14,
                             weight: 'bold',
@@ -153,17 +153,17 @@ export const generateChart = async (fid: any) => { // async 추가
                         borderDash: [5, 5], // 점선 스타일
                     },
                     ticks: {
-                        color: '#006400',
+                        color: '#8B4513',
                         font: {
                             size: 14,
                             weight: 'bold', // Y축 값들을 bold로 설정
                         },
                         //stepSize: 7000, // Y축 간격을 100으로 설정
                     },
-                    min: minClaimAmount, // Y축 최소값
-                    max: maxClaimAmount, // Y축 최대값을 45000으로 설정하여 간격 조정
+                    min: minFarRank, // Y축 최소값
+                    max: maxFarRank, // Y축 최대값을 45000으로 설정하여 간격 조정
                     border: {
-                        color: '#006400', // Y축 검은색 선
+                        color: '#8B4513', // Y축 검은색 선
                         width: 2, // Y축 선 두께
                     }
                 }

@@ -182,11 +182,11 @@ export async function GET(req: Request) {
           //fontFamily: '"Arial", sans-serif',
           fontFamily: '"Poppins-Regular"', // 폰트 이름
           //backgroundColor: '#7158e2',
-          color: '#006400',
+          color: '#8B4513',
           padding: '40px',
           boxSizing: 'border-box',
           //backgroundImage: 'linear-gradient(145deg, #6d5dfc 10%, #b2a3f6 90%)',
-          backgroundImage: `url(${NEXT_PUBLIC_URL}/autumn_color.png)`,
+          backgroundImage: `url(${NEXT_PUBLIC_URL}/autumn_color2.png)`,
         }}
       >
 
@@ -209,11 +209,22 @@ export async function GET(req: Request) {
             </div>
           </div>
 
-          <div style={{ position: 'absolute', top: '0px', right: '200px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <div style={{ position: 'absolute', top: '0px', right: '470px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <img
-              src={`${NEXT_PUBLIC_URL}/Moxie_Maxi_Typing.png`}
+              src={`${NEXT_PUBLIC_URL}/Moxie_Maxi_Scared.png`}
               height="200"
               width="200"  // 크기 조정
+              style={{
+                objectFit: 'contain',
+              }}
+            />
+          </div>
+
+          <div style={{ position: 'absolute', top: '0px', right: '200px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+            <img
+              src={`${NEXT_PUBLIC_URL}/Moxie_Maxi_HandsUp.png`}
+              height="230"
+              width="220"  // 크기 조정
               style={{
                 objectFit: 'contain',
               }}
@@ -248,7 +259,7 @@ export async function GET(req: Request) {
           </div>
        </div>
 
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', fontSize: '50px' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', fontSize: '40px' }}>
           <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
             <strong>{finalFarRank}</strong>
           </div>
@@ -258,7 +269,7 @@ export async function GET(req: Request) {
           <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
             <strong>{finalStakedTvl}K</strong>
           </div>
-          <div style={{ display: 'flex', flex: 1, justifyContent: 'center', fontSize: '40px' }}>
+          <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
             <strong>{finalTodayAmount}</strong>
           </div>
         </div>
@@ -278,7 +289,7 @@ export async function GET(req: Request) {
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', fontSize: '50px' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', fontSize: '40px' }}>
           <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
             <strong>{finalLike}</strong>
           </div>
@@ -293,7 +304,7 @@ export async function GET(req: Request) {
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', fontSize: '30px', color: 'green' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', fontSize: '30px', color: '#8B4513' }}>
           <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
             <strong>({finalLikeCount}/500)</strong>
           </div>

@@ -102,8 +102,8 @@ export async function GET(req: Request) {
 
     //화면 구성값 계산
     like  = parseFloat((parseFloat(farScore) * 0.5).toFixed(2));
-    reply = parseFloat((parseFloat(farScore) * 2).toFixed(2));
-    rcQt  = parseFloat((parseFloat(farScore) * 4).toFixed(2));
+    reply = parseFloat((parseFloat(farScore) * 1).toFixed(2));
+    rcQt  = parseFloat((parseFloat(farScore) * 2).toFixed(2));
     finalLike  = like.toLocaleString();
     finalReply = reply.toLocaleString();
     finalRcQt  = rcQt.toLocaleString();
@@ -182,7 +182,7 @@ export async function GET(req: Request) {
           //fontFamily: '"Arial", sans-serif',
           fontFamily: '"Poppins-Regular"', // 폰트 이름
           //backgroundColor: '#7158e2',
-          color: '#8B4513',
+          color: '#DC143C',
           padding: '40px',
           boxSizing: 'border-box',
           //backgroundImage: 'linear-gradient(145deg, #6d5dfc 10%, #b2a3f6 90%)',
@@ -304,15 +304,15 @@ export async function GET(req: Request) {
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', fontSize: '30px', color: '#8B4513' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', fontSize: '30px', color: '#DC143C' }}>
           <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
             <strong>({finalLikeCount}/500)</strong>
           </div>
           <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
-            <strong>({finalReplyCount}/300)</strong>
+            <strong>({finalReplyCount}/200)</strong>
           </div>
           <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
-            <strong>({finalRcQtCount}/150)</strong>
+            <strong>({finalRcQtCount}/100)</strong>
           </div>
           <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
             <strong></strong>

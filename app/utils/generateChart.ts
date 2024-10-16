@@ -124,7 +124,7 @@ export const generateChart = async (fid: any) => { // async 추가
                     display: true, // 데이터 레이블 표시
                     color: '#000000', // 레이블 색상
                     font: {
-                        size: 18,
+                        size: 14,
                         weight: 'bold',
                         family: 'CustomFont', // 레이블에 폰트 적용
                     },

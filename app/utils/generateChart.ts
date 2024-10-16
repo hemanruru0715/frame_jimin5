@@ -1,6 +1,7 @@
 import { createCanvas, registerFont  } from 'canvas';
 import Chart from 'chart.js/auto';
 import { fetchUserDataRecentSevenDaysForChart } from '@/app/utils/supabase';
+import ChartDataLabels from 'chartjs-plugin-datalabels'; // DataLabels 플러그인 가져오기
 
 // 커스텀 폰트 등록 (TrueType Font 파일 경로)
 registerFont('./public/fonts/Recipekorea.ttf', { family: 'CustomFont' });
@@ -53,10 +54,23 @@ export const generateChart = async (fid: any) => { // async 추가
 
     //console.log("labels=" + JSON.stringify(labels));
     // sortedUserChartData와 labels를 매칭하여 available_claim_amount 값을 채움
-    const farRanks = labels.map(label => {
+    let farRanks = labels.map(label => {
         const entry = sortedUserChartData.find(data => data.record_date_utc.startsWith(label));
         return entry ? entry.far_rank : 0; // 데이터가 없으면 0 반환
     });
+
+    //farRanks=[0,0,0,0,0,0,0,270,251,0,0,0,215,206];
+  
+    // 최대 랭킹에서 현재 랭킹을 빼는 방식으로 변환
+    const maxRankingValue = Math.max(...farRanks); // 현재 데이터에서 최대값 찾기
+
+    let invertedFarRanks = farRanks.map(rank => {
+        if (rank > 0) {
+            return (maxRankingValue + 50) - rank; // 랭킹을 반대로 변환
+        }
+        return 0; // 랭킹이 0일 경우 그대로 반환
+    });
+
 
     console.log("farRanks=" + JSON.stringify(farRanks));
     const minFarRank = Math.min(...farRanks); // 최소값
@@ -76,7 +90,7 @@ export const generateChart = async (fid: any) => { // async 추가
             datasets: [
                 {
                     //label: 'claim',
-                    data: farRanks,
+                    data: invertedFarRanks,
                     borderColor: '#DC143C', // 선 색상
                     backgroundColor: 'rgba(220, 20, 60, 0.8)', // 채워지는 영역 투명도
                     fill: true, // 영역 차트로 만듬
@@ -104,6 +118,21 @@ export const generateChart = async (fid: any) => { // async 추가
                         font: {
                             size: 12, // 레전드 텍스트 크기
                         }
+                    }
+                },
+                datalabels: {
+                    display: true, // 데이터 레이블 표시
+                    color: '#000000', // 레이블 색상
+                    font: {
+                        size: 18,
+                        weight: 'bold',
+                        family: 'CustomFont', // 레이블에 폰트 적용
+                    },
+                    align: 'end', // 막대의 끝에 맞춰 표시
+                    anchor: 'end', // 막대의 끝 기준으로 레이블을 붙임
+                    offset: 10, // 레이블을 위로 10px 더 이동
+                    formatter: (value: number) => {
+                        return value !== 0 ?  ((maxRankingValue + 50) - value).toString() : ''; // null이 아닌 값만 표시
                     }
                 }
             },
@@ -159,124 +188,23 @@ export const generateChart = async (fid: any) => { // async 추가
                             weight: 'bold', // Y축 값들을 bold로 설정
                         },
                         //stepSize: 7000, // Y축 간격을 100으로 설정
+                        beginAtZero: false,
+                        display: false
                     },
                     min: minFarRank, // Y축 최소값
                     max: maxFarRank, // Y축 최대값을 45000으로 설정하여 간격 조정
+                    reverse: false,
                     border: {
                         color: '#DC143C', // Y축 검은색 선
                         width: 2, // Y축 선 두께
                     }
                 }
             }
-        }
+        },
+        plugins: [ChartDataLabels] // DataLabels 플러그인 활성화
     };
 
     new Chart(ctx, chartConfig);
 
     return canvas.toBuffer();  // 이미지를 Buffer로 반환
 };
-
-
-
-
-
-// import { NextResponse } from "next/server";
-// import { NextApiHandler } from 'next';
-// import { createCanvas } from 'canvas';
-// import Chart, { ChartConfiguration } from 'chart.js/auto';
-
-
-// const handler: NextApiHandler = async (req, res) => {
-//     if (req.method === 'GET') {
-//         const data = { 
-//             pokemon: {
-//                 name: '꼬부기'
-//             }
-//         }
-//         res.status(200).json({ data: data })
-//     } 
-
-//     if (req.method === 'POST') {
-//         const canvas = createCanvas(800, 600);
-//         const ctx: any = canvas.getContext('2d');
-
-//         const chartConfig: ChartConfiguration = {
-//             type: 'bar',
-//             data: {
-//             labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-//             datasets: [
-//                 {
-//                     label: '# of Votes',
-//                     data: [12, 19, 3, 5, 2, 3]
-//                 }
-//             ]
-//             },
-//             options: {
-//             responsive: false,
-//             plugins: {
-//                 legend: {
-//                 position: 'top'
-//                 }
-//             }
-//             }
-//         };
-//         const chart = new Chart(ctx, chartConfig);
-//         const imageData = canvas.toBuffer();
-    
-//         res.writeHead(200, {
-//             'Content-Type': 'image/png',
-//           });
-//         res.end(imageData);
-//     }
-// };
-
-// export default handler;
-
-
-
-// import { ChartJSNodeCanvas } from "chartjs-node-canvas";
-
-// const width = 800; // 차트 너비
-// const height = 600; // 차트 높이
-
-// export async function generateChart() {
-//   const chartJSNodeCanvas = new ChartJSNodeCanvas({ width, height });
-
-//   // 차트 구성 설정
-//   const chartConfig: any = {  // 타입을 any로 지정해서 타입 충돌 방지
-//     type: "bar", // 차트 종류
-//     data: {
-//       labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"], // x축 레이블
-//       datasets: [
-//         {
-//           label: "# of Votes", // 데이터셋 레이블
-//           data: [12, 19, 3, 5, 2, 3], // 데이터 값
-//           backgroundColor: ["red", "blue", "yellow", "green", "purple", "orange"], // 배경색
-//         },
-//       ],
-//     },
-//     options: {
-//       responsive: false, // 서버에서는 반응형 차트를 사용하지 않음
-//       animation: false, // 서버에서는 애니메이션 사용하지 않음
-//       plugins: {
-//         legend: {
-//           display: true, // 범례 표시
-//           position: "top", // 범례 위치
-//         },
-//       },
-//       scales: {
-//         x: {
-//           display: true, // x축 표시
-//         },
-//         y: {
-//           display: true, // y축 표시
-//         },
-//       },
-//     },
-//   };
-
-//   // 차트를 이미지 버퍼로 렌더링
-//   return await chartJSNodeCanvas.renderToBuffer(chartConfig);
-// }
-
-

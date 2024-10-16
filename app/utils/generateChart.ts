@@ -149,7 +149,7 @@ export const generateChart = async (fid: any) => { // async 추가
                         }
                     },
                     grid: {
-                        color: 'rgba(220, 20, 60, 0.8)', // 그리드 선을 흐리게
+                        color: 'rgba(220, 20, 60, 0.3)', // 그리드 선을 흐리게
                         lineWidth: 1, // 그리드 선 두께
                         borderDash: [5, 5], // 점선 스타일
                     },
@@ -177,7 +177,7 @@ export const generateChart = async (fid: any) => { // async 추가
                         }
                     },
                     grid: {
-                        color: 'rgba(220, 20, 60, 0.8)', // Y축 그리드 선 색상 조정
+                        color: 'rgba(220, 20, 60, 0.3)', // Y축 그리드 선 색상 조정
                         lineWidth: 1, // Y축 그리드 선 두께
                         borderDash: [5, 5], // 점선 스타일
                     },

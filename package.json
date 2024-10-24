@@ -16,6 +16,7 @@
     "@airstack/airstack-react": "^0.6.4",
     "@airstack/frames": "^1.2.0",
     "@coinbase/onchainkit": "^0.27.1",
+    "@duneanalytics/client-sdk": "^0.2.4",
     "@farcaster/hub-nodejs": "^0.12.3",
     "@supabase/supabase-js": "^2.45.4",
     "@vercel/node": "^3.2.10",

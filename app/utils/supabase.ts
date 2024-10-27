@@ -74,7 +74,7 @@ export const fetchUserDataRecentSevenDaysForChart = async (fid: number) => {
   const UTCDate = getUTCYYYYMMDD(new Date());
 
   // 7일 전 날짜 (UTC)
-  const sevenDaysAgoUTCDate = getUTCYYYYMMDD(new Date(new Date().getTime() - 6 * 24 * 60 * 60 * 1000)); // 6일을 빼서 7일 전 날짜로 만듦
+  const sevenDaysAgoUTCDate = getUTCYYYYMMDD(new Date(new Date().getTime() - 13 * 24 * 60 * 60 * 1000)); // 6일을 빼서 7일 전 날짜로 만듦
   
   const { data, error } = await supabase
     .from(userInfoPerDate)

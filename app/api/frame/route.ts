@@ -9,6 +9,7 @@ import { fetchUserData, updateInsertUserData, updateInsertUserDataForChart } fro
 import axios from "axios";
 import { gql, GraphQLClient } from "graphql-request";
 import resolveFidToAddresses from "@/app/utils/resolve";
+import { google } from 'googleapis';
 
 //process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 export const dynamic = 'force-dynamic';
@@ -134,6 +135,46 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         // You can remove await if you are using `moxie_resolve.json`
         userAddresses: await resolveFidToAddresses(myFid),
       };
+
+
+          /* 구글 Sheet Api */  
+    // 서비스 계정 키 파일 경로
+    const googleSheetApiKey = process.env.GOOGLE_SHEETS_API_KEY; // 환경 변수에서 API 키 가져오기
+
+    const sheets = google.sheets({ version: 'v4' });
+
+    const spreadsheetId = '1Iu01j6ilS9IuDnmz75IKlPaWH5J4-Gzh8OVQ7ql9sSQ';
+    const range = '21 Oct 2024!A2:G';
+
+    // Google Sheets API를 사용하여 데이터 가져오기
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId,
+      range,
+      key: googleSheetApiKey, // API 키를 요청에 포함
+    });
+    
+
+    const rows = response.data.values ?? "";
+
+    //console.warn("rows=" + JSON.stringify(rows));
+    //console.warn("rows1=" + rows[0]);
+    //console.warn("rows2=" + rows[0][2]);
+
+    // data가 배열인지 확인한 후 filter 적용
+    const result = Array.isArray(rows) ? rows.filter(item => item[1] == myFid) : [];
+    console.log("result=" + JSON.stringify(result));
+    let allowLike = 200;
+    let allowReply = 80;
+    let allowRcQt = 40;
+    if(result.length > 0){
+      allowLike = result[0][2];
+      allowReply = result[0][3];
+      allowRcQt = result[0][4];
+    }
+
+console.log("allowLike=" + allowLike);
+console.log("allowReply=" + allowReply);
+console.log("allowRcQt=" + allowRcQt);
 
 
     let profileName = '';
@@ -372,6 +413,9 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
       available_claim_amount: availableClaimAmount,
       staked_tvl: stakedTvl,
       unstaked_tvl: unStakedTvl,
+      allow_like: allowLike,
+      allow_reply: allowReply,
+      allow_rcqt: allowRcQt,
     });
 
 
@@ -410,6 +454,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
                                          &tvl=${tvl}&tvlBoost=${tvlBoost}&liquidityBoost=${liquidityBoost}&powerBoost=${powerBoost}
                                          &stakedTvl=${stakedTvl}&unStakedTvl=${unStakedTvl}
                                          &availableClaimAmount=${availableClaimAmount}
+                                         &allowLike=${allowLike}&allowReply=${allowReply}&allowRcQt=${allowRcQt}
                                          &cache_burst=${Math.floor(Date.now() / 1000)}`,
           aspectRatio: '1:1',
         },
@@ -458,6 +503,9 @@ export async function GET(req: NextRequest) {
     available_claim_amount: number,
     staked_tvl: number,
     unstaked_tvl: number,
+    allow_like: number,
+    allow_reply: number,
+    allow_rcqt: number,
   }
 
   /**************** DB 작업 ****************/
@@ -489,6 +537,9 @@ export async function GET(req: NextRequest) {
     available_claim_amount:  data.available_claim_amount,
     staked_tvl: data.staked_tvl,
     unstaked_tvl: data.unstaked_tvl,
+    allow_like: data.allow_like,
+    allow_reply: data.allow_reply,
+    allow_rcqt: data.allow_rcqt,
   };
 
   const profileImage = encodeURIComponent(frameData.profile_image);
@@ -521,6 +572,7 @@ export async function GET(req: NextRequest) {
                                        &tvl=${frameData.tvl}&tvlBoost=${frameData.tvl_boost}&liquidityBoost=${frameData.liquidity_boost}&powerBoost=${frameData.power_boost}
                                        &stakedTvl=${frameData.staked_tvl}&unStakedTvl=${frameData.unstaked_tvl}
                                        &availableClaimAmount=${frameData.available_claim_amount}
+                                       &allowLike=${frameData.allow_like}&allowReply=${frameData.allow_reply}&allowRcQt=${frameData.allow_rcqt}
                                        &cache_burst=${Math.floor(Date.now() / 1000)}`,
         aspectRatio: '1:1',
       },

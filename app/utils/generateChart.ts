@@ -66,14 +66,15 @@ export const generateChart = async (fid: any) => { // async 추가
 
     let invertedFarRanks = farRanks.map(rank => {
         if (rank > 0) {
-            return (maxRankingValue + 50) - rank; // 랭킹을 반대로 변환
+            return (maxRankingValue + 90) - rank; // 랭킹을 반대로 변환
         }
         return 0; // 랭킹이 0일 경우 그대로 반환
     });
 
 
     console.log("farRanks=" + JSON.stringify(farRanks));
-    const minFarRank = Math.min(...farRanks); // 최소값
+    console.log("invertedFarRanks=" + JSON.stringify(invertedFarRanks));
+    //const minFarRank = Math.min(...farRanks); // 최소값 - 랭킹을 거꾸로 표시하므로 y축 시작점은 0으로 세팅
     const maxFarRank = Math.max(...farRanks); // 최대값
 
     let labels14 = getLast14DaysLabels_MMDD(); //실제로 x축은 월일만 보여줌
@@ -132,7 +133,7 @@ export const generateChart = async (fid: any) => { // async 추가
                     anchor: 'end', // 막대의 끝 기준으로 레이블을 붙임
                     offset: 10, // 레이블을 위로 10px 더 이동
                     formatter: (value: number) => {
-                        return value !== 0 ?  ((maxRankingValue + 50) - value).toString() : ''; // null이 아닌 값만 표시
+                        return value !== 0 ?  ((maxRankingValue + 90) - value).toString() : ''; // null이 아닌 값만 표시
                     }
                 }
             },
@@ -191,7 +192,7 @@ export const generateChart = async (fid: any) => { // async 추가
                         beginAtZero: false,
                         display: false
                     },
-                    min: minFarRank, // Y축 최소값
+                    min: 0, // Y축 최소값
                     max: maxFarRank, // Y축 최대값을 45000으로 설정하여 간격 조정
                     reverse: false,
                     border: {

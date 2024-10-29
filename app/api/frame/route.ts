@@ -144,7 +144,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const sheets = google.sheets({ version: 'v4' });
 
     const spreadsheetId = '1Iu01j6ilS9IuDnmz75IKlPaWH5J4-Gzh8OVQ7ql9sSQ';
-    const range = '21 Oct 2024!A2:G';
+    const range = '28 Oct 2024!A2:H';
 
     // Google Sheets API를 사용하여 데이터 가져오기
     const response = await sheets.spreadsheets.values.get({
@@ -161,7 +161,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     //console.warn("rows2=" + rows[0][2]);
 
     // data가 배열인지 확인한 후 filter 적용
-    const result = Array.isArray(rows) ? rows.filter(item => item[1] == myFid) : [];
+    const result = Array.isArray(rows) ? rows.filter(item => item[0] == myFid) : [];
     console.log("result=" + JSON.stringify(result));
     let allowLike = 200;
     let allowReply = 80;

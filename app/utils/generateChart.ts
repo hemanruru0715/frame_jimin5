@@ -92,8 +92,8 @@ export const generateChart = async (fid: any) => { // async 추가
                 {
                     //label: 'claim',
                     data: invertedFarRanks,
-                    borderColor: '#DC143C', // 선 색상
-                    backgroundColor: 'rgba(220, 20, 60, 0.8)', // 채워지는 영역 투명도
+                    borderColor: '#F1FF34', // 선 색상
+                    backgroundColor: '#F1FF34', // 채워지는 영역 투명도
                     fill: true, // 영역 차트로 만듬
                     pointBackgroundColor: 'red', // 데이터 포인트 색상
                     pointRadius: 2, // 데이터 포인트 크기
@@ -115,7 +115,7 @@ export const generateChart = async (fid: any) => { // async 추가
                     display: false, // 범례 표시를 비활성화
                     position: 'top',
                     labels: {
-                        color: '#DC143C', // 레전드 텍스트 색상
+                        color: '#F1FF34', // 레전드 텍스트 색상
                         font: {
                             size: 12, // 레전드 텍스트 크기
                         }
@@ -123,7 +123,7 @@ export const generateChart = async (fid: any) => { // async 추가
                 },
                 datalabels: {
                     display: true, // 데이터 레이블 표시
-                    color: '#000000', // 레이블 색상
+                    color: '#F1FF34', // 레이블 색상
                     font: {
                         size: 14,
                         weight: 'bold',
@@ -142,7 +142,7 @@ export const generateChart = async (fid: any) => { // async 추가
                     title: {
                         display: true,
                         text: 'recent 14 days',
-                        color: '#DC143C',
+                        color: '#F1FF34',
                         font: {
                             size: 14,
                             weight: 'bold',
@@ -155,14 +155,14 @@ export const generateChart = async (fid: any) => { // async 추가
                         borderDash: [5, 5], // 점선 스타일
                     },
                     ticks: {
-                        color: '#DC143C',
+                        color: '#F1FF34',
                         font: {
                             size: 14,
                             weight: 'bold', // Y축 값들을 bold로 설정
                         }
                     },
                     border: {
-                        color: '#DC143C', // X축 검은색 선
+                        color: '#F1FF34', // X축 검은색 선
                         width: 2, // X축 선 두께
                     }
                 },
@@ -170,7 +170,7 @@ export const generateChart = async (fid: any) => { // async 추가
                     title: {
                         display: true,
                         text: 'Far Rank',
-                        color: '#DC143C',
+                        color: '#F1FF34',
                         font: {
                             size: 14,
                             weight: 'bold',
@@ -183,7 +183,7 @@ export const generateChart = async (fid: any) => { // async 추가
                         borderDash: [5, 5], // 점선 스타일
                     },
                     ticks: {
-                        color: '#DC143C',
+                        color: '#F1FF34',
                         font: {
                             size: 14,
                             weight: 'bold', // Y축 값들을 bold로 설정
@@ -196,7 +196,7 @@ export const generateChart = async (fid: any) => { // async 추가
                     max: maxFarRank, // Y축 최대값을 45000으로 설정하여 간격 조정
                     reverse: false,
                     border: {
-                        color: '#DC143C', // Y축 검은색 선
+                        color: '#F1FF34', // Y축 검은색 선
                         width: 2, // Y축 선 두께
                     }
                 }

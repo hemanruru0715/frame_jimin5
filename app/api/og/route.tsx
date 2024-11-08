@@ -190,11 +190,11 @@ export async function GET(req: Request) {
           //fontFamily: '"Arial", sans-serif',
           fontFamily: '"Poppins-Regular"', // 폰트 이름
           //backgroundColor: '#7158e2',
-          color: '#DC143C',
+          color: '#F1FF34',
           padding: '40px',
           boxSizing: 'border-box',
           //backgroundImage: 'linear-gradient(145deg, #6d5dfc 10%, #b2a3f6 90%)',
-          backgroundImage: `url(${NEXT_PUBLIC_URL}/autumn_color2.png)`,
+          backgroundImage: `url(${NEXT_PUBLIC_URL}/moxie_winter.png)`,
         }}
       >
 
@@ -312,7 +312,7 @@ export async function GET(req: Request) {
           </div>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', fontSize: '30px', color: '#DC143C' }}>
+        <div style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', width: '100%', fontSize: '30px', color: '#F1FF34' }}>
           <div style={{ display: 'flex', flex: 1, justifyContent: 'center' }}>
             <strong>({finalLikeCount}/{allowLike})</strong>
           </div>

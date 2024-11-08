@@ -93,7 +93,7 @@ export const generateChart = async (fid: any) => { // async 추가
                     //label: 'claim',
                     data: invertedFarRanks,
                     borderColor: '#F1FF34', // 선 색상
-                    backgroundColor: '#F1FF34', // 채워지는 영역 투명도
+                    backgroundColor: 'rgba(241, 255, 52, 0.7)', // 노란색에 70% 투명도
                     fill: true, // 영역 차트로 만듬
                     pointBackgroundColor: 'red', // 데이터 포인트 색상
                     pointRadius: 2, // 데이터 포인트 크기

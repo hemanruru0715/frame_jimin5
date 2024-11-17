@@ -10,7 +10,7 @@ registerFont('./public/fonts/Recipekorea.ttf', { family: 'CustomFont' });
 const getLast14DaysLabels = (): string[] => {
     const today = new Date();
     const last14DaysLabels = [];
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < 21; i++) {
         const pastDate = new Date(today);
         pastDate.setDate(today.getDate() - i);
         const year = pastDate.getFullYear();
@@ -24,7 +24,7 @@ const getLast14DaysLabels = (): string[] => {
 const getLast14DaysLabels_MMDD = (): string[] => {
     const today = new Date();
     const last14DaysLabels_MMDD = [];
-    for (let i = 0; i < 14; i++) {
+    for (let i = 0; i < 21; i++) {
         const pastDate = new Date(today);
         pastDate.setDate(today.getDate() - i);
         const year = pastDate.getFullYear();
@@ -141,7 +141,7 @@ export const generateChart = async (fid: any) => { // async 추가
                 x: {
                     title: {
                         display: true,
-                        text: 'recent 14 days',
+                        text: 'recent 21 days',
                         color: '#F1FF34',
                         font: {
                             size: 14,

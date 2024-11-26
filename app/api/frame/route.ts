@@ -144,7 +144,7 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
     const sheets = google.sheets({ version: 'v4' });
 
     const spreadsheetId = '1Iu01j6ilS9IuDnmz75IKlPaWH5J4-Gzh8OVQ7ql9sSQ';
-    const range = '18 Nov 2024!A2:H';
+    const range = '25 Nov 2024!A2:H';
 
     // Google Sheets API를 사용하여 데이터 가져오기
     const response = await sheets.spreadsheets.values.get({

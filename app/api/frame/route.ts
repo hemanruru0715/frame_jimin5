@@ -56,6 +56,12 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
                 profileName
                 userId
                 profileImage
+                totalSpendAllowance {
+                  frameInteractions
+                  likes
+                  recasts
+                  replies
+                }
                 profileImageContentValue {
                   image {
                     medium
@@ -139,42 +145,42 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
 
           /* 구글 Sheet Api */  
     // 서비스 계정 키 파일 경로
-    const googleSheetApiKey = process.env.GOOGLE_SHEETS_API_KEY; // 환경 변수에서 API 키 가져오기
+//     const googleSheetApiKey = process.env.GOOGLE_SHEETS_API_KEY; // 환경 변수에서 API 키 가져오기
 
-    const sheets = google.sheets({ version: 'v4' });
+//     const sheets = google.sheets({ version: 'v4' });
 
-    const spreadsheetId = '1Iu01j6ilS9IuDnmz75IKlPaWH5J4-Gzh8OVQ7ql9sSQ';
-    const range = '25 Nov 2024!A2:H';
+//     const spreadsheetId = '1Iu01j6ilS9IuDnmz75IKlPaWH5J4-Gzh8OVQ7ql9sSQ';
+//     const range = '25 Nov 2024!A2:H';
 
-    // Google Sheets API를 사용하여 데이터 가져오기
-    const response = await sheets.spreadsheets.values.get({
-      spreadsheetId,
-      range,
-      key: googleSheetApiKey, // API 키를 요청에 포함
-    });
+//     // Google Sheets API를 사용하여 데이터 가져오기
+//     const response = await sheets.spreadsheets.values.get({
+//       spreadsheetId,
+//       range,
+//       key: googleSheetApiKey, // API 키를 요청에 포함
+//     });
     
 
-    const rows = response.data.values ?? "";
+//     const rows = response.data.values ?? "";
 
-    //console.warn("rows=" + JSON.stringify(rows));
-    //console.warn("rows1=" + rows[0]);
-    //console.warn("rows2=" + rows[0][2]);
+//     //console.warn("rows=" + JSON.stringify(rows));
+//     //console.warn("rows1=" + rows[0]);
+//     //console.warn("rows2=" + rows[0][2]);
 
-    // data가 배열인지 확인한 후 filter 적용
-    const result = Array.isArray(rows) ? rows.filter(item => item[0] == myFid) : [];
-    console.log("result=" + JSON.stringify(result));
-    let allowLike = 200;
-    let allowReply = 80;
-    let allowRcQt = 40;
-    if(result.length > 0){
-      allowLike = result[0][2];
-      allowReply = result[0][3];
-      allowRcQt = result[0][4];
-    }
+//     // data가 배열인지 확인한 후 filter 적용
+//     const result = Array.isArray(rows) ? rows.filter(item => item[0] == myFid) : [];
+//     console.log("result=" + JSON.stringify(result));
+//     let allowLike = 200;
+//     let allowReply = 80;
+//     let allowRcQt = 40;
+//     if(result.length > 0){
+//       allowLike = result[0][2];
+//       allowReply = result[0][3];
+//       allowRcQt = result[0][4];
+//     }
 
-console.log("allowLike=" + allowLike);
-console.log("allowReply=" + allowReply);
-console.log("allowRcQt=" + allowRcQt);
+// console.log("allowLike=" + allowLike);
+// console.log("allowReply=" + allowReply);
+// console.log("allowRcQt=" + allowRcQt);
 
 
     let profileName = '';
@@ -199,6 +205,11 @@ console.log("allowRcQt=" + allowRcQt);
     let replyCount = 0;
     let recastCount = 0;
     let quoteCount = 0;
+
+    let frameInteraction = 20;
+    let allowLike = 200;
+    let allowReply = 80;
+    let allowRcQt = 40;
 
      // 데이터 처리 함수 호출 후 그 결과를 기다림
     await main(myFid, socialCapitalQuery, quoteRecastsQuery);
@@ -260,6 +271,17 @@ console.log("allowRcQt=" + allowRcQt);
         weeklyAmount = data.weekly.FarcasterMoxieEarningStat[0].allEarningsAmount.toFixed(2);
         lifeTimeAmount = data.allTime.FarcasterMoxieEarningStat[0].allEarningsAmount.toFixed(2);
 
+        if(data.Socials.Social[0].totalSpendAllowance != null){
+          frameInteraction = data.Socials.Social[0].totalSpendAllowance.frameInteractions;
+          allowLike = data.Socials.Social[0].totalSpendAllowance.likes;
+          allowReply = data.Socials.Social[0].totalSpendAllowance.recasts;
+          allowRcQt = data.Socials.Social[0].totalSpendAllowance.replies;
+        }
+    
+    console.log("frameInteraction=" + frameInteraction);
+    console.log("allowLike=" + allowLike);
+    console.log("allowReply=" + allowReply);
+    console.log("allowRcQt=" + allowRcQt);
 
         console.warn("stakingData=" + JSON.stringify(stakingData));
 

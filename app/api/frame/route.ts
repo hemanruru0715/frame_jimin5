@@ -274,8 +274,8 @@ async function getResponse(req: NextRequest): Promise<NextResponse> {
         if(data.Socials.Social[0].totalSpendAllowance != null){
           frameInteraction = data.Socials.Social[0].totalSpendAllowance.frameInteractions;
           allowLike = data.Socials.Social[0].totalSpendAllowance.likes;
-          allowReply = data.Socials.Social[0].totalSpendAllowance.recasts;
-          allowRcQt = data.Socials.Social[0].totalSpendAllowance.replies;
+          allowReply = data.Socials.Social[0].totalSpendAllowance.replies;
+          allowRcQt = data.Socials.Social[0].totalSpendAllowance.recasts;
         }
     
     console.log("frameInteraction=" + frameInteraction);
